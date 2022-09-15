@@ -1,6 +1,11 @@
-Array.prototype.myReduce = function(callback){
-    var result = this[0];
-    for(var i = 1; i < this.length; i++){
+Array.prototype.myReduce = function(callback,init){
+    var i = 0;
+    var result = this[i];
+    if(init!==null&&init!==undefined){
+        result = init;
+        result = callback(result,this[i]);
+    }
+    for(i = 1; i < this.length; i++){
         if(this[i] == null)
         continue;
         result = callback(result,this[i]);
@@ -8,11 +13,17 @@ Array.prototype.myReduce = function(callback){
     return result;
 }
 
-var arr = [4,6,7,8,9];
 
-function sum(val1,val2){
-    return val1-val2;
-}
+const arr = [8,5,3,7,2,5]
 
-console.log(arr.myReduce(sum));
+const myArr = arr.myReduce((acc, cur) => {
+    acc.total += cur;
+    acc.doubleArr.push(cur * 2);
+    return acc;
+}, {total: 0, doubleArr: []});
 
+const myArr1 = arr.myReduce((acc, cur) => {
+    acc.total += cur;
+    acc.doubleArr.push(cur * 2);
+    return acc;
+}, {total: 0, doubleArr: []});
